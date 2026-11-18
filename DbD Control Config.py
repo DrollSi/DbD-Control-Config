@@ -21,34 +21,31 @@ try:
 except ImportError:
     MULTIMEDIA_OK = False
 
-GITHUB_URL = "https://github.com/DrollSi/DbD-Control-Config"
-
-WARNING_TEXT = f"""<h2>Предупреждение</h2>
-
-<p>Нажимая кнопку «Я прочитал и согласен.», вы соглашаетесь с тем, что
-эта программа может <b>изменять файлы сохранения игры Dead by Daylight</b>.</p>
-
-<p><b>Автор программы не несёт ответственности за ваш аккаунт.</b>
-Все действия вы выполняете на свой страх и риск.</p>
-
-<p><b>По правилам Dead by Daylight менять файлы графики и управление не запрещено,</b>
-однако неизвестно, не выйдет ли обновление, которое запретит это.
-Решение об использовании программы остаётся за вами.</p>
-
-<p><b>Используя программу, вы полностью принимаете риски на себя.</b>
-Не хотите рисковать - просто закройте её, никаких изменений внесено не будет.</p>
+WARNING_TEXT = f"""<h2 align="center">Предупреждение</h2>
 
 <hr>
 
-<p><b>Автор программы: DrollSi.</b></p>
+<p align="center">Нажимая кнопку «Подтвердить согласие», вы соглашаетесь с тем, что эта<br>
+программа может <b>изменять файлы сохранения игры Dead by Daylight</b>.</p>
 
-<p>Программа распространяется <b>только на официальной странице GitHub</b>
-и является полностью открытой <b>(Open Source)</b> - исходный код доступен каждому.</p>
+<hr>
 
-<p><b style="color: #c0392b;">Если вы скачали программу где-то ещё это ФЕЙК.</b>
-Такая копия может быть опасна: никто не знает, что в неё добавили.
-Проверяйте, что запускаете файл с официальной страницы:<br>
-<a href="{GITHUB_URL}">{GITHUB_URL}</a></p>"""
+<p align="center"><b>Dead by Daylight не запрещает менять файлы графики и управление,</b><br>
+однако неизвестно, не выйдет ли обновление, которое запретит это.<br>
+<b>Решение об использовании программы остаётся за вами.</b></p>
+
+<p align="center"><b>Автор программы не несёт ответственности за ваш аккаунт.</b><br>
+Все действия вы выполняете на свой страх и риск.</p>
+
+<hr>
+
+<p align="center">Программа распространяется <b>только на официальной странице <a href="https://github.com/DrollSi/DbD-Control-Config">GitHub</a></b> и является<br>
+полностью открытой, <b>исходный код доступен каждому.</b></p>
+
+<hr>
+
+<p align="center"><b>Проверяйте, что запускаете файл с официальной страницы:</b><br>
+<a href="https://github.com/DrollSi/DbD-Control-Config">https://github.com/DrollSi/DbD-Control-Config</a></p>"""
 
 def app_dir():
     """Папка, где лежит программа: у exe или у исходника."""
@@ -67,8 +64,6 @@ GENERAL_SECTION = "General"
 
 LOCKED_MODE = "Неизменяемые привязки"
 
-# Процесс игры: если он запущен, сохранение блокируется
-GAME_PROCESS_NAME = "DeadByDaylight-Win64-Shipping.exe"
 
 # Вкладки программы
 MODES = [
@@ -237,11 +232,13 @@ SCANCODE_MAP = {
     0x36: "RShift", 0x1D: "Ctrl", 0x38: "Alt", 0x3A: "CapsLock",
     0xC7: "Home", 0xC8: "PageUp", 0xC9: "PageDown", 0xCF: "End",
     0xD1: "Pause", 0xD2: "Insert", 0xD3: "Delete",
+    0x1A: "[", 0x1B: "]", 0x27: ";", 0x28: "'",
+    0x33: ",", 0x34: ".", 0x35: "/",
     # Расширенные сканкоды (с префиксом 0xE0) на случай, если система отдаёт их так
     0x1CD: "Enter", 0x11D: "Ctrl", 0x138: "Alt",
     0x14B: "Left", 0x147: "Home", 0x152: "Insert", 0x153: "Delete",
     0x148: "Up", 0x150: "Down", 0x149: "PageUp", 0x151: "PageDown",
-    0x14D: "Right", 0x14F: "End",
+    0x14D: "Right", 0x14F: "End",   
 }
 
 # Кнопки мыши (как отображаем в интерфейсе)
@@ -287,6 +284,8 @@ KEY_TO_UE = {
     "ЛКМ": "LeftMouseButton",
     "ПКМ": "RightMouseButton",
     "СКМ": "MiddleMouseButton",
+    "Колесо вверх": "MouseScrollUp",
+    "Колесо вниз": "MouseScrollDown",
     "M4": "ThumbMouseButton",
     "M5": "ThumbMouseButton2",
     "Space": "SpaceBar",
@@ -298,7 +297,13 @@ KEY_TO_UE = {
     "Tab": "Tab",
     "Backspace": "BackSpace",
     "CapsLock": "CapsLock",
-    # Delete, Insert, PageUp, PageDown, Home, End, Pause - имена совпадают, идут как есть
+    "[": "LeftBracket",
+    "]": "RightBracket",
+    ";": "Semicolon",
+    "'": "Apostrophe",
+    ",": "Comma",
+    ".": "Period",
+    "/": "Slash",
 }
 
 # Обратный перевод: имя движка -> как показываем в программе.
@@ -309,7 +314,7 @@ for _disp, _ue in KEY_TO_UE.items():
 
 DEFAULT_FORCE = 1.0
 MIN_FORCE = 0.1   # ниже 0.1 нельзя
-FORCE_STEP = 0.1  # шаг слайдера: 0.1, 0.2, 0.3 ... 1.0
+FORCE_STEP = 0.1  # шаг слайдера 0.1
 
 # Шапка, которая всегда пишется в начало Input.ini
 INI_HEADER = (
@@ -369,57 +374,10 @@ def save_tutorial_seen():
         config.write(f)
 
 
-def is_process_running(process_name):
-    """Проверяет через WinAPI, запущен ли процесс с таким именем.
-
-    Без внешних библиотек: CreateToolhelp32Snapshot + Process32First/Next.
-    На не-Windows всегда False, чтобы программа не падала.
-    """
-    if os.name != "nt":
-        return False
-
-    import ctypes
-    from ctypes import wintypes
-
-    TH32CS_SNAPPROCESS = 0x00000002
-
-    class PROCESSENTRY32W(ctypes.Structure):
-        _fields_ = [
-            ("dwSize", wintypes.DWORD),
-            ("cntUsage", wintypes.DWORD),
-            ("th32DefaultHeapID", ctypes.POINTER(ctypes.c_ulong)),
-            ("th32ModuleID", wintypes.DWORD),
-            ("cntThreads", wintypes.DWORD),
-            ("th32ParentProcessID", wintypes.DWORD),
-            ("pcPriClassBase", ctypes.c_long),
-            ("dwFlags", wintypes.DWORD),
-            ("szExeFile", ctypes.c_wchar * 260),
-        ]
-
-    kernel32 = ctypes.windll.kernel32
-    snapshot = kernel32.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
-    if snapshot == -1:
-        return False
-
-    try:
-        entry = PROCESSENTRY32W()
-        entry.dwSize = ctypes.sizeof(PROCESSENTRY32W)
-
-        success = kernel32.Process32FirstW(snapshot, ctypes.byref(entry))
-        while success:
-            if entry.szExeFile.lower() == process_name.lower():
-                return True
-            success = kernel32.Process32NextW(snapshot, ctypes.byref(entry))
-    finally:
-        kernel32.CloseHandle(snapshot)
-
-    return False
-
-
 class WarningDialog(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle(f"{APP_NAME} - предупреждение")
+        self.setWindowTitle(f"{APP_NAME} - Предупреждение")
         self.resize(520, 460)
 
         root = QVBoxLayout(self)
@@ -441,7 +399,7 @@ class WarningDialog(QDialog):
 
         # ---------- Кнопка ----------
         btn_row = QHBoxLayout()
-        self.btn_agree = QPushButton("Я прочитал и согласен")
+        self.btn_agree = QPushButton("Подтвердить согласие")
         btn_row.addWidget(self.btn_agree)
         root.addLayout(btn_row)
 
@@ -468,7 +426,7 @@ class TutorialDialog(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle(f"{APP_NAME} - обучающий ролик")
+        self.setWindowTitle(f"{APP_NAME} - Обучающий видеоурок")
         self.resize(860, 560)
         self.setMinimumSize(640, 420)
 
@@ -480,7 +438,7 @@ class TutorialDialog(QDialog):
         root.setSpacing(10)
 
         # ---------- Заголовок ----------
-        title = QLabel("Перед использованием программы посмотри обучающий видео ролик")
+        title = QLabel("Посмотреть видеоурок?")
         title.setWordWrap(True)
         title.setAlignment(Qt.AlignCenter)
         title.setStyleSheet("font-size: 15px; font-weight: bold;")
@@ -498,7 +456,6 @@ class TutorialDialog(QDialog):
             self.video_page = None
             warn = QLabel(
                 "Плеер\n\nМодуль PySide6-Multimedia не установлен - видео недоступно.\n"
-                "Установите: pip install PySide6-Multimedia"
             )
             warn.setAlignment(Qt.AlignCenter)
             warn.setStyleSheet(
@@ -537,7 +494,7 @@ class TutorialDialog(QDialog):
         # ---------- Кнопки выбора ----------
         choice_row = QHBoxLayout()
         choice_row.addStretch(1)
-        self.btn_watch = QPushButton("Да, я готов посмотреть видео гайд")
+        self.btn_watch = QPushButton("Да, я готов посмотреть")
         self.btn_skip = QPushButton("Нет, я уже знаю")
         choice_row.addWidget(self.btn_watch)
         choice_row.addWidget(self.btn_skip)
@@ -580,9 +537,7 @@ class TutorialDialog(QDialog):
             QMessageBox.warning(
                 self,
                 "Видео недоступно",
-                "Не установлен модуль PySide6-Multimedia.\n"
-                "Установите его командой:\n"
-                "pip install PySide6-Multimedia"
+                "Не установлен модуль PySide6-Multimedia."
             )
             self.accept()
             return
@@ -638,7 +593,7 @@ class TutorialDialog(QDialog):
             self.exit_fullscreen()
         else:
             self.showFullScreen()
-            self.btn_fullscreen.setText("Выйти из полного экрана")
+            self.btn_fullscreen.setText("Выйти")
             self.video_page.setFocus()
 
     def exit_fullscreen(self):
@@ -689,10 +644,17 @@ class TutorialDialog(QDialog):
 
 
 class KeyCaptureButton(QPushButton):
-    """Кнопка: клик -> режим захвата -> записывает клавишу или кнопку мыши."""
+    """Кнопка: клик -> режим захвата -> записывает клавишу или кнопку мыши.
+
+    Фактическая клавиша хранится в self.key_value, а не в тексте кнопки:
+    текст "-" - это только плейсхолдер пустой привязки.
+    """
+    EMPTY_TEXT = "-"
+
     def __init__(self, key_text="", parent=None):
-        super().__init__(key_text or "-", parent)
+        super().__init__(key_text or self.EMPTY_TEXT, parent)
         self.capturing = False
+        self.key_value = key_text or ""
         self.clicked.connect(self.start_capture)
 
     def start_capture(self):
@@ -708,12 +670,18 @@ class KeyCaptureButton(QPushButton):
 
         key = event.key()
         if key == Qt.Key_Escape:
+            # Отмена захвата - привязка не меняется
             self.stop_capture()
             return
 
         # Системные клавиши нельзя - отменяем захват без изменения
         if key in BLOCKED_KEYS:
-            self.setText("-")
+            self.stop_capture()
+            return
+
+        # Backspace - очистить привязку (как в игре): станет пустой
+        if key == Qt.Key_Backspace:
+            self.clear_key()
             self.stop_capture()
             return
 
@@ -723,6 +691,7 @@ class KeyCaptureButton(QPushButton):
             name = QKeySequence(key).toString() or f"Key {key}"
 
         name = normalize_key_name(name)
+        self.key_value = name
         self.setText(name)
         self.stop_capture()
 
@@ -730,21 +699,58 @@ class KeyCaptureButton(QPushButton):
         if self.capturing:
             name = MOUSE_BUTTONS.get(event.button())
             if name:
+                self.key_value = name
                 self.setText(name)
                 self.stop_capture()
             event.accept()
             return
         super().mousePressEvent(event)
 
+    def wheelEvent(self, event):
+        """Захват прокрутки колёсика: вверх или вниз."""
+        if not self.capturing:
+            return super().wheelEvent(event)
+
+        delta = event.angleDelta().y()
+        if delta > 0:
+            self.key_value = "Колесо вверх"
+            self.setText(self.key_value)
+            self.stop_capture()
+            event.accept()
+        elif delta < 0:
+            self.key_value = "Колесо вниз"
+            self.setText(self.key_value)
+            self.stop_capture()
+            event.accept()
+        # если delta == 0 (наклон колеса в сторону) - игнорируем, ждём дальше
+
     def stop_capture(self):
         self.capturing = False
         self.releaseKeyboard()
         self.releaseMouse()
         self.setStyleSheet("")
+        # Возвращаем текст кнопки к реальному значению привязки
+        self.setText(self.key_value or self.EMPTY_TEXT)
+
+    def clear_key(self):
+        """Очищает привязку: в интерфейсе пусто, в конфигах тоже пусто."""
+        self.key_value = ""
+        self.setText(self.EMPTY_TEXT)
 
     def key_text(self):
-        t = self.text()
-        return "" if t == "Нажмите клавишу..." else t
+        return self.key_value
+
+
+class NoWheelComboBox(QComboBox):
+    """Комбобокс, который не листается колёсиком мыши."""
+    def wheelEvent(self, event):
+        event.ignore()
+
+
+class NoWheelSlider(QSlider):
+    """Слайдер, который не меняется колёсиком мыши."""
+    def wheelEvent(self, event):
+        event.ignore()
 
 
 class ForceWidget(QWidget):
@@ -753,8 +759,9 @@ class ForceWidget(QWidget):
         super().__init__()
         layout = QHBoxLayout(self)
         layout.setContentsMargins(6, 2, 6, 2)
+        # ... дальше всё как было
 
-        self.slider = QSlider(Qt.Horizontal)
+        self.slider = NoWheelSlider(Qt.Horizontal)
         self.slider.setRange(int(MIN_FORCE * 100), 100)
         self.slider.setSingleStep(10)
         self.slider.setPageStep(10)
@@ -846,7 +853,7 @@ class ModeTab(QWidget):
         row = self.table.rowCount()
         self.table.insertRow(row)
 
-        combo_action = QComboBox()
+        combo_action = NoWheelComboBox()
         combo_action.addItems(ACTIONS.get(self.mode, []))
         if action_name in ACTIONS.get(self.mode, []):
             combo_action.setCurrentText(action_name)
@@ -909,26 +916,28 @@ class ModeTab(QWidget):
 
     # ---------- Данные для конфига ----------
     def rows_data(self):
-        """Список строк (действие, клавиша, сила). Строки без клавиши отбрасываются."""
+        """Список строк (действие, клавиша, сила).
+
+        Пустая клавиша сохраняется как пустая: в конфиге будет "Действие||сила",
+        в Input.ini - Key= без значения.
+        """
         result = []
         for row in range(self.table.rowCount()):
             combo = self.table.cellWidget(row, 0)
             key_btn = self.table.cellWidget(row, 1)
             force_w = self.table.cellWidget(row, 2)
-            key = key_btn.key_text()
-            if not key:
-                continue
             force = force_w.value() if force_w is not None else None
-            result.append((combo.currentText(), key, force))
+            result.append((combo.currentText(), key_btn.key_text(), force))
         return result
 
     def set_rows(self, rows):
-        """Заливает в таблицу список строк (действие, клавиша, сила)."""
+        """Заливает в таблицу список строк (действие, клавиша, сила).
+
+        Пустая клавиша - валидная строка: кнопка покажет "-", конфиг - пустое значение.
+        """
         self.table.setRowCount(0)
         for action, key, force in rows:
             if action not in ACTIONS.get(self.mode, []):
-                continue
-            if not key:
                 continue
             if force is None or force == "":
                 force = DEFAULT_FORCE
@@ -1090,7 +1099,7 @@ class MainWindow(QMainWindow):
 
         self.load_config()
         self.refresh_save_hints()
-        self.log("DbD Control Config (1.0.0) запущена.")
+        self.log("DbD Control Config (1.4.0) запущена.")
 
     # ---------- Вкладка настроек ----------
     def _make_settings_tab(self):
@@ -1236,16 +1245,6 @@ class MainWindow(QMainWindow):
             self.log("Снятие «Только чтение» отменено: путь не выбран")
             return
 
-        if is_process_running(GAME_PROCESS_NAME):
-            QMessageBox.warning(
-                self,
-                APP_NAME,
-                f"Процесс {GAME_PROCESS_NAME} сейчас работает.\n"
-                "Закройте Dead by Daylight и повторите попытку."
-            )
-            self.log("Снятие «Только чтение» отменено: игра запущена")
-            return
-
         ini_path = os.path.join(path, "Input.ini")
         if not os.path.exists(ini_path):
             QMessageBox.information(
@@ -1313,8 +1312,6 @@ class MainWindow(QMainWindow):
             return "Путь не выбран (вкладка \"Настройки\")"
         if os.path.basename(path.rstrip("\\/")).lower() != "windowsclient":
             return "Папка не похожа на WindowsClient"
-        if is_process_running(GAME_PROCESS_NAME):
-            return "Игра запущена - закройте её"
         return ""
 
     def refresh_save_hints(self):
@@ -1346,17 +1343,6 @@ class MainWindow(QMainWindow):
                 "Выберите правильную папку на вкладке «Настройки»."
             )
             self.log("Сохранение отменено: папка не похожа на WindowsClient")
-            return
-
-        # Проверка запущенной игры в момент нажатия
-        if is_process_running(GAME_PROCESS_NAME):
-            QMessageBox.warning(
-                self,
-                APP_NAME,
-                f"Процесс {GAME_PROCESS_NAME} сейчас работает.\n"
-                "Закройте Dead by Daylight и повторите сохранение."
-            )
-            self.log("Сохранение отменено: игра запущена")
             return
 
         ini_path = os.path.join(self.ed_path.text().strip(), "Input.ini")
